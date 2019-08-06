@@ -1,7 +1,7 @@
 # Личный проект «Большое путешествие» [![Build status][travis-image]][travis-url]
 
 * Студент: [Юлия Швецова](https://up.htmlacademy.ru/ecmascript/9/user/548815).
-* Наставник: `Неизвестно`.
+* Наставник: [Юрий Татаринцев](https://up.htmlacademy.ru/ecmascript/9/user/235196).
 
 ---
 
