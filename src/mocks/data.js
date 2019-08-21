@@ -1,9 +1,4 @@
-import {TYPES, CITIES, DESCRIPTIONS} from '../utils/constants.js';
-
-const DESCRIPTION_MAX_LENGTH = 3;
-const OPTIONS_MAX_COUNT = 2;
-const PRICE_MAX = 50;
-const PHOTOS_COUNT = 5;
+import {TYPES, CITIES, DESCRIPTIONS, DESCRIPTION_MAX_LENGTH, OPTIONS_MAX_COUNT, PRICE_MAX, PHOTOS_COUNT} from '../utils/constants.js';
 
 const generateOptions = () => {
   const options = [

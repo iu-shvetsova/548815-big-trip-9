@@ -1,6 +1,6 @@
 'use strict';
 
-import {MENU_ITEMS, FILTERS, CITIES} from './utils/constants.js';
+import {EVENTS_AMOUNT, MENU_ITEMS, FILTERS, CITIES} from './utils/constants.js';
 
 import {createEvent} from './mocks/data.js';
 
@@ -16,7 +16,6 @@ import {getDayComponent} from './components/day.js';
 import {getEventsListComponent} from './components/events-list.js';
 import {getEventComponent} from './components/event.js';
 
-const EVENTS_AMOUNT = 5;
 const events = [];
 
 const createEvents = () => {
