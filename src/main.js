@@ -35,8 +35,6 @@ const renderComponents = () => {
 
   const eventsSection = document.querySelector(`.trip-events`);
 
-  events.forEach((item) => console.log(new Date(item.startTime).toDateString()));
-
   renderComponent(infoSection, getRouteComponent(events[0].startTime, events[EVENTS_AMOUNT - 1].startTime, events), `afterbegin`);
   renderComponent(infoSection, getTotalPriceComponent(events), `beforeend`);
   renderComponent(controlsTitles[0], getMenuComponent(MENU_ITEMS), `afterend`);
