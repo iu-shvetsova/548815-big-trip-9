@@ -1,3 +1,9 @@
+export const Position = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`,
+  AFTEREND: `afterend`,
+};
+
 export const EVENTS_AMOUNT = 5;
 export const DESCRIPTION_MAX_LENGTH = 3;
 export const OPTIONS_MAX_COUNT = 2;
