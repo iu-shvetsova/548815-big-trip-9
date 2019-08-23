@@ -39,27 +39,29 @@ const generateOptions = () => {
 };
 
 export const createEvent = () => {
-  const photos = [];
-  for (let i = 0; i < PHOTOS_COUNT; i++) {
-    photos[i] = `http://picsum.photos/300/150?r=${Math.random()}`;
-  }
-
+  const type = TYPES[Math.floor(Math.random() * TYPES.length)];
+  const city = CITIES[Math.floor(Math.random() * CITIES.length)];
+  const startTime = Date.now() + Math.floor(Math.random() * 7 * 24 * 60) * 60 * 1000;
+  const endTime = startTime + Math.floor(Math.random() * 1 * 24 * 60) * 60 * 1000;
+  const price = Math.floor(Math.random() * PRICE_MAX) + 1;
+  const options = generateOptions();
   const description = [];
   const DESCRIPTION_LENGTH = Math.floor(Math.random() * DESCRIPTION_MAX_LENGTH) + 1;
   for (let i = 0; i < DESCRIPTION_LENGTH; i++) {
     description.push(DESCRIPTIONS[Math.floor(Math.random() * DESCRIPTIONS.length)]);
   }
-
-  const startTime = Date.now() + Math.floor(Math.random() * 7 * 24 * 60) * 60 * 1000;
-  const endTime = startTime + Math.floor(Math.random() * 1 * 24 * 60) * 60 * 1000;
+  const photos = [];
+  for (let i = 0; i < PHOTOS_COUNT; i++) {
+    photos[i] = `http://picsum.photos/300/150?r=${Math.random()}`;
+  }
 
   return {
-    type: TYPES[Math.floor(Math.random() * TYPES.length)],
-    city: CITIES[Math.floor(Math.random() * CITIES.length)],
+    type,
+    city,
     startTime,
     endTime,
-    price: Math.floor(Math.random() * PRICE_MAX) + 1,
-    options: generateOptions(),
+    price,
+    options,
     description,
     photos
   };
