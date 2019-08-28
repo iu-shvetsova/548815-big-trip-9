@@ -1,22 +1,9 @@
-import {createElement} from '../utils/index.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class TotalPrice {
+export default class TotalPrice extends AbstractComponent {
   constructor(events) {
+    super();
     this._events = events;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    if (this._element) {
-      this._element = null;
-    }
   }
 
   getTemplate() {

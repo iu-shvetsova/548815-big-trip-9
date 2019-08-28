@@ -1,7 +1,9 @@
-import {createElement, setTime, generateOfferName} from '../utils/index.js';
+import {setTime, generateOfferName} from '../utils/index.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class EventEdid {
+export default class EventEdid extends AbstractComponent {
   constructor(cities, number, {type, city, startTime, endTime, price, options, description, photos}) {
+    super();
     this._cities = cities;
     this._number = number;
     this._type = type;
@@ -12,20 +14,6 @@ export default class EventEdid {
     this._options = options;
     this._description = description;
     this._photos = photos;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    if (this._element) {
-      this._element = null;
-    }
   }
 
   getTemplate() {
