@@ -21,8 +21,6 @@ const createEvents = () => {
   events.sort((a, b) => a.startTime - b.startTime);
 }
 
-const renderComponent = (container, component, position) => container.insertAdjacentHTML(position, component);
-
 const renderComponents = () => {
   const renderMenu = (data) => {
     const menu = new Menu(data);
