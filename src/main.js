@@ -10,7 +10,7 @@ import Filter from './components/filter.js';
 import Route from './components/route.js';
 import TotalPrice from './components/total-price.js';
 import Sorting from './components/sorting.js';
-import TripController from './components/trip-controller.js';
+import TripController from './controllers/trip-controller.js';
 
 const events = [];
 
