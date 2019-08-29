@@ -1,24 +1,11 @@
-import {createElement} from '../utils/index.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class Route {
+export default class Route extends AbstractComponent {
   constructor(startDate, endDate, events) {
+    super();
     this._startDate = startDate;
     this._endDate = endDate;
     this._events = events;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    if (this._element) {
-      this._element = null;
-    }
   }
 
   getTemplate() {
