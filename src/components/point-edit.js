@@ -1,7 +1,7 @@
 import {setTime, generateOfferName} from '../utils/index.js';
 import AbstractComponent from './abstract-component.js';
 
-export default class EventEdid extends AbstractComponent {
+export default class PointEdit extends AbstractComponent {
   constructor(cities, number, {type, city, startTime, endTime, price, options, description, photos}) {
     super();
     this._cities = cities;
@@ -14,6 +14,21 @@ export default class EventEdid extends AbstractComponent {
     this._options = options;
     this._description = description;
     this._photos = photos;
+
+    this._subscribeOnEvents();
+  }
+
+  _setType() {
+    this.getElement().querySelectorAll(`.event__type-input`).forEach((type) => {
+      type.addEventListener(`click`, () => {
+        this.getElement().querySelector(`.event__type-icon`).src = `img/icons/${type.value}.png`;
+        this.getElement().querySelector(`.event__label`).innerText = `${type.value} to`;
+      });
+    });
+  }
+
+  _subscribeOnEvents() {
+    this._setType();
   }
 
   getTemplate() {

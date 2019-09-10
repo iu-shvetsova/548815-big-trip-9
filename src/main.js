@@ -1,9 +1,9 @@
 'use strict';
 
-import {Position, EVENTS_AMOUNT, MENU_ITEMS, FILTERS} from './utils/constants.js';
+import {Position, POINTS_AMOUNT, MENU_ITEMS, FILTERS} from './utils/constants.js';
 import {render} from './utils/index.js';
 
-import {createEvent} from './mocks/data.js';
+import {createPoint} from './mocks/data.js';
 
 import Menu from './components/menu.js';
 import Filter from './components/filter.js';
@@ -12,13 +12,13 @@ import TotalPrice from './components/total-price.js';
 import Sorting from './components/sorting.js';
 import TripController from './controllers/trip-controller.js';
 
-const events = [];
+const points = [];
 
-const createEvents = () => {
-  for (let i = 0; i < EVENTS_AMOUNT; i++) {
-    events[i] = createEvent();
+const createPoints = () => {
+  for (let i = 0; i < POINTS_AMOUNT; i++) {
+    points[i] = createPoint();
   }
-  events.sort((a, b) => a.startTime - b.startTime);
+  points.sort((a, b) => a.startTime - b.startTime);
 }
 
 const renderComponents = () => {
@@ -33,18 +33,18 @@ const renderComponents = () => {
   };
 
   const renderRoute = () => {
-    const route = new Route(events[0].startTime, events[EVENTS_AMOUNT - 1].startTime, events);
+    const route = new Route(points[0].startTime, points[POINTS_AMOUNT - 1].startTime, points);
     render(infoSection, route.getElement(), Position.AFTERBEGIN);
   };
 
   const renderTotalPrice = () => {
-    const totalPrice = new TotalPrice(events);
+    const totalPrice = new TotalPrice(points);
     render(infoSection, totalPrice.getElement(), Position.BEFOREEND);
   };
 
   const renderSorting = () => {
-    const sotring = new Sorting();
-    render(eventsSection, sotring.getElement(), Position.BEFOREEND);
+    const sorting = new Sorting();
+    render(pointsSection, sorting.getElement(), Position.BEFOREEND);
   };
 
   const tripMainSection = document.querySelector(`.trip-main`);
@@ -52,7 +52,7 @@ const renderComponents = () => {
   const controlsSection = tripMainSection.querySelector(`.trip-main__trip-controls`);
   const controlsTitles = controlsSection.querySelectorAll(`h2`);
 
-  const eventsSection = document.querySelector(`.trip-events`);
+  const pointsSection = document.querySelector(`.trip-events`);
 
   renderRoute();
   renderTotalPrice();
@@ -60,9 +60,9 @@ const renderComponents = () => {
   renderFilter(FILTERS);
   renderSorting();
 
-  const tripController = new TripController(eventsSection, events);
+  const tripController = new TripController(pointsSection, points);
   tripController.init();
 };
 
-createEvents();
+createPoints();
 renderComponents();

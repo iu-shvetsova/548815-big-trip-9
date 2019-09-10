@@ -38,7 +38,7 @@ const generateOptions = () => {
   return options;
 };
 
-export const createEvent = () => {
+export const createPoint = () => {
   const type = TYPES[Math.floor(Math.random() * TYPES.length)];
   const city = CITIES[Math.floor(Math.random() * CITIES.length)];
   const startTime = Date.now() + Math.floor(Math.random() * 7 * 24 * 60) * 60 * 1000;
