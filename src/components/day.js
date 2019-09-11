@@ -5,6 +5,8 @@ export default class Day extends AbstractComponent {
     super();
     this._number = number;
     this._date = new Date(date);
+
+    // console.log(this._date);
   }
 
   getTemplate() {

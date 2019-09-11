@@ -1,16 +1,19 @@
-import {render} from '../utils/index.js';
-import {Position, EVENTS_AMOUNT, CITIES} from '../utils/constants.js';
+import {setRoute, setDates, setTotalPrice, render} from '../utils/index.js';
+import {Position, POINTS_AMOUNT, CITIES} from '../utils/constants.js';
 import DaysList from '../components/days-list.js';
 import Day from '../components/day.js';
-import EventsList from '../components/events-list.js';
-import EventEdit from '../components/event-edit.js';
-import Event from '../components/event.js';
+import PointsList from '../components/points-list.js';
+import PointController from './point-controller.js';
 
 export default class TripController {
-  constructor(container, events) {
+  constructor(container, points) {
     this._container = container;
-    this._events = events;
+    this._points = points;
     this._daysList = new DaysList();
+
+    this._subscriptions = [];
+    this._onDataChange = this._onDataChange.bind(this);
+    this._onChangeView = this._onChangeView.bind(this);
   }
 
   _renderDay(number, date) {
@@ -18,68 +21,74 @@ export default class TripController {
     render(this._daysList.getElement(), day.getElement(), Position.BEFOREEND);
   }
 
-  _renderEventsList(container) {
-    const eventsList = new EventsList();
-    render(container, eventsList.getElement(), Position.BEFOREEND);
+  _renderPointsList(container) {
+    const pointsList = new PointsList();
+    render(container, pointsList.getElement(), Position.BEFOREEND);
   }
 
-  _renderEvent(container, cities, number, eventMock) {
-    const event = new Event(eventMock);
-    const eventEdit = new EventEdit(cities, number, eventMock);
+  _generatePointsDates() {
+    const dates = [];
+    let currentDate = new Date(this._points[0].startTime).toDateString();
+    dates.push(currentDate);
+    this._renderDay(dates.length, this._points[0].startTime);
 
-    event.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
-      event.getElement().replaceWith(eventEdit.getElement());
-    });
+    for (let i = 1; i < this._points.length; i++) {
+      if (new Date(this._points[i].startTime).toDateString() !== currentDate) {
+        currentDate = new Date(this._points[i].startTime).toDateString();
+        dates.push(currentDate);
+        this._renderDay(dates.length, this._points[i].startTime);
+      }
+    }
 
-    eventEdit.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
-      eventEdit.getElement().replaceWith(event.getElement());
-    });
+    return dates;
+  }
 
-    eventEdit.getElement().addEventListener(`submit`, () => {
-      eventEdit.getElement().replaceWith(event.getElement());
-    });
+  _renderPoint(container, cities, number, pointMock) {
+    const pointController = new PointController(container, cities, number, pointMock, this._onDataChange, this._onChangeView);
+    this._subscriptions.push(pointController.setDefaultView.bind(pointController));
+  }
 
-    render(container, event.getElement(), Position.BEFOREEND);
+  _renderPoints(pointsDates) {
+    const days = this._daysList.getElement().querySelectorAll(`.trip-days__item`);
+
+    let j = 0;
+    for (let i = 0; i < pointsDates.length; i++) {
+      this._renderPointsList(days[i]);
+      const pointsList = days[i].querySelector(`.trip-events__list`);
+
+      while ((j < POINTS_AMOUNT) && (new Date(this._points[j].startTime).toDateString() === pointsDates[i])) {
+        this._renderPoint(pointsList, CITIES, j, this._points[j]);
+        j++;
+      }
+    }
+  }
+
+  _updatePoints() {
+    this._points = this._points.sort((a, b) => a.startTime - b.startTime);
+
+    document.querySelector(`.trip-info__title`).innerHTML = setRoute(this._points);
+    document.querySelector(`.trip-info__dates`).innerHTML = setDates(this._points[0].startTime, this._points[this._points.length - 1].startTime);
+    document.querySelector(`.trip-info__cost-value`).innerText = setTotalPrice(this._points);
+
+    this._daysList.getElement().innerHTML = ``;
+    const pointsDates = this._generatePointsDates();
+    this._renderPoints(pointsDates);
+  }
+
+  _onDataChange(newData, oldData) {
+    this._points[this._points.findIndex((point) => point === oldData)] = newData;
+    this._updatePoints();
+  }
+
+  _onChangeView() {
+    this._subscriptions.forEach((subscription) => subscription());
   }
 
   init() {
     render(this._container, this._daysList.getElement(), Position.BEFOREEND);
 
-    const generateEventsDates = () => {
-      const dates = [];
-      let currentDate = new Date(this._events[0].startTime).toDateString();
-      dates.push(currentDate);
-      this._renderDay(dates.length, this._events[0].startTime);
-
-      for (let i = 1; i < this._events.length; i++) {
-        if (new Date(this._events[i].startTime).toDateString() !== currentDate) {
-          currentDate = new Date(this._events[i].startTime).toDateString();
-          dates.push(currentDate);
-          this._renderDay(dates.length, this._events[i].startTime);
-        }
-      }
-
-      return dates;
-    };
-
-    const renderEvents = (eventsDates) => {
-      const days = this._daysList.getElement().querySelectorAll(`.trip-days__item`);
-
-      let j = 0;
-      for (let i = 0; i < eventsDates.length; i++) {
-        this._renderEventsList(days[i]);
-        const eventsList = days[i].querySelector(`.trip-events__list`);
-
-        while ((j < EVENTS_AMOUNT) && (new Date(this._events[j].startTime).toDateString() === eventsDates[i])) {
-          this._renderEvent(eventsList, CITIES, j, this._events[j]);
-          j++;
-        }
-      }
-    };
-
-    render(this._container, this._daysList.getElement(), Position.BEFOREEND);
-    const eventsDates = generateEventsDates();
-    renderEvents(eventsDates);
+    const pointsDates = this._generatePointsDates();
+    this._renderPoints(pointsDates);
 
   }
 }

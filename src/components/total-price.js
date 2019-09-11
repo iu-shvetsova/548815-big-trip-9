@@ -1,21 +1,16 @@
+import {setTotalPrice} from '../utils/index.js';
 import AbstractComponent from './abstract-component.js';
 
 export default class TotalPrice extends AbstractComponent {
-  constructor(events) {
+  constructor(points) {
     super();
-    this._events = events;
+    this._points = points;
   }
 
   getTemplate() {
     return `
       <p class="trip-info__cost">
-        Total: &euro;&nbsp;<span class="trip-info__cost-value">${this._events.reduce((acc, event) => {
-    acc += event.price;
-    event.options.filter((item) => item[`isChecked`]).forEach((item) => {
-      acc += item[`price`];
-    });
-    return acc;
-  }, 0)}
+        Total: &euro;&nbsp;<span class="trip-info__cost-value">${setTotalPrice(this._points)}
         </span>
       </p>
     `;

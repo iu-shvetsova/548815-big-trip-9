@@ -1,6 +1,6 @@
 import AbstractComponent from './abstract-component.js';
 
-export default class EventsList extends AbstractComponent {
+export default class PointsList extends AbstractComponent {
   constructor() {
     super();
   }

@@ -4,7 +4,7 @@ export const Position = {
   AFTEREND: `afterend`,
 };
 
-export const EVENTS_AMOUNT = 5;
+export const POINTS_AMOUNT = 5;
 export const DESCRIPTION_MAX_LENGTH = 3;
 export const OPTIONS_MAX_COUNT = 2;
 export const PRICE_MAX = 50;

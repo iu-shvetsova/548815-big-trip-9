@@ -1,13 +1,13 @@
 import {setTime, setTimeDifference} from '../utils/index.js';
 import AbstractComponent from './abstract-component.js';
 
-export default class Event extends AbstractComponent {
+export default class Point extends AbstractComponent {
   constructor({type, city, startTime, endTime, price, options}) {
     super();
     this._type = type;
     this._city = city;
-    this._startTime = startTime;
-    this._endTime = endTime;
+    this._startTime = new Date(startTime);
+    this._endTime = new Date(endTime);
     this._price = price;
     this._options = options;
   }
@@ -23,9 +23,9 @@ export default class Event extends AbstractComponent {
 
           <div class="event__schedule">
             <p class="event__time">
-              <time class="event__start-time" datetime="${new Date(this._startTime).toISOString().slice(0, 16)}">${setTime(new Date(this._startTime).getHours())}:${setTime(new Date(this._startTime).getMinutes())}</time>
+              <time class="event__start-time" datetime="${this._startTime.toISOString().slice(0, 16)}">${setTime(this._startTime.getHours())}:${setTime(this._startTime.getMinutes())}</time>
               &mdash;
-              <time class="event__end-time" datetime="${new Date(this._endTime).toISOString().slice(0, 16)}">${setTime(new Date(this._endTime).getHours())}:${setTime(new Date(this._endTime).getMinutes())}</time>
+              <time class="event__end-time" datetime="${this._endTime.toISOString().slice(0, 16)}">${setTime(this._endTime.getHours())}:${setTime(this._endTime.getMinutes())}</time>
             </p>
             <p class="event__duration">
               ${setTimeDifference(this._startTime, this._endTime)}
