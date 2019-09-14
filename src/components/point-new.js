@@ -11,6 +11,21 @@ export default class PointNew extends AbstractComponent {
     this._endTime = new Date(endTime);
     this._price = price;
     this._options = options;
+
+    this._subscribeOnEvents();
+  }
+
+  _setType() {
+    this.getElement().querySelectorAll(`.event__type-input`).forEach((type) => {
+      type.addEventListener(`click`, () => {
+        this.getElement().querySelector(`.event__type-icon`).src = `img/icons/${type.value}.png`;
+        this.getElement().querySelector(`.event__label`).innerText = `${type.value} to`;
+      });
+    });
+  }
+
+  _subscribeOnEvents() {
+    this._setType();
   }
 
   getTemplate() {
