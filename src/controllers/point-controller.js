@@ -18,9 +18,9 @@ export default class PointController {
     this._pointNew = new PointNew(cities, data);
 
     if (mode === Mode.ADDING) {
-      this._add();
+      this._createAdding();
     } else {
-      this._init();
+      this._createDefault();
     }
   }
 
@@ -58,7 +58,7 @@ export default class PointController {
     };
   }
 
-  _add() {
+  _createAdding() {
     const onSaveButtonClick = (evt) => {
       evt.preventDefault();
       const formData = new FormData(this._pointNew.getElement());
@@ -98,7 +98,7 @@ export default class PointController {
     render(document.querySelector(`.trip-events__trip-sort`), this._pointNew.getElement(), Position.AFTEREND);
   }
 
-  _init() {
+  _createDefault() {
     const onSaveButtonClick = () => {
       let data = this._data;
       let formData = new FormData(this._pointEdit.getElement());
