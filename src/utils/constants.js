@@ -4,6 +4,11 @@ export const Position = {
   AFTEREND: `afterend`,
 };
 
+export const Mode = {
+  ADDING: `adding`,
+  DEFAULT: `default`,
+};
+
 export const POINTS_AMOUNT = 5;
 export const DESCRIPTION_MAX_LENGTH = 3;
 export const OPTIONS_MAX_COUNT = 2;
